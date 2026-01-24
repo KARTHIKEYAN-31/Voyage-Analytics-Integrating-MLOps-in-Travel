@@ -2,6 +2,8 @@
 
 A classification model designed to predict a user's gender from their profile data.
 
+![Gender Classification](../picture/gender_classification.png)
+
 ## Features
 - **Model**: Scikit-Learn RandomForestClassifier.
 - **REST API**: Flask-based endpoint for real-time classification.

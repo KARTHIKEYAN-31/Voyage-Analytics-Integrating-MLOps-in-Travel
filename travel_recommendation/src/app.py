@@ -6,7 +6,7 @@ import numpy as np
 
 st.set_page_config(page_title="Voyager Travel Insights", layout="wide")
 
-st.title("🚢 Voyager Travel Insights Dashboard (Enhanced)")
+st.title("Voyager Travel Insights Dashboard (Enhanced)")
 
 # Paths
 MODEL_PATH = 'travel_recommendation/models/collab_model.pkl'
@@ -72,7 +72,7 @@ else:
             
     # Insights Section
     st.divider()
-    st.header("📊 Global Travel Insights")
+    st.header("Global Travel Insights")
     
     col1, col2 = st.columns(2)
     

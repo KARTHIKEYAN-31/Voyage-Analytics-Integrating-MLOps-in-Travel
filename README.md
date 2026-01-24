@@ -2,6 +2,10 @@
 
 Voyager is a comprehensive MLOps project focusing on predictive analytics for travel and user data. It covers regression, classification, and recommendation system scenarios, integrated with modern MLOps tools.
 
+
+![Voyager](picture/flight_price_prediction.png)
+
+
 ## Project Structure
 
 ```text

@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voyage | Flight Price Predictor</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6366f1;
+            --secondary: #8b5cf6;
+            --accent: #ec4899;
+            --background: #0f172a;
+            --surface: rgba(30, 41, 59, 0.7);
+            --text: #f8fafc;
+            --text-secondary: #94a3b8;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        body {
+            background-color: var(--background);
+            color: var(--text);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-image:
+                radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.15) 0px, transparent 50%),
+                radial-gradient(at 100% 0%, rgba(236, 72, 153, 0.15) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(139, 92, 246, 0.15) 0px, transparent 50%);
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1000px;
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .card {
+            background: var(--surface);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 2.5rem;
+            flex: 1;
+            min-width: 300px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        .header {
+            margin-bottom: 2rem;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(to right, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        p.subtitle {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        label {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            font-weight: 600;
+        }
+
+        input,
+        select {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 1rem;
+            color: var(--text);
+            font-size: 1rem;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        input:focus,
+        select:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
+        }
+
+        button {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 2rem;
+            transition: transform 0.2s ease, opacity 0.2s ease;
+        }
+
+        button:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+
+        .result-card {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(236, 72, 153, 0.1));
+        }
+
+        .price-display {
+            font-size: 4rem;
+            font-weight: 700;
+            color: white;
+            margin: 1.5rem 0;
+            text-shadow: 0 0 20px rgba(99, 102, 241, 0.5);
+        }
+
+        .currency {
+            font-size: 2rem;
+            color: var(--text-secondary);
+            vertical-align: super;
+        }
+
+        #result-container {
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .show {
+            opacity: 1 !important;
+        }
+
+        .loader {
+            border: 4px solid rgba(255, 255, 255, 0.1);
+            border-left-color: var(--primary);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            display: none;
+            margin: 2rem auto;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="card">
+            <div class="header">
+                <h1>Voyage.ai</h1>
+                <p class="subtitle">Predict your flight price instantly with AI.</p>
+            </div>
+
+            <form id="prediction-form">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>From</label>
+                        <select name="from" required>
+                            <option value="" disabled selected>Select Origin</option>
+                            <option value="Recife (PE)">Recife (PE)</option>
+                            <option value="Florianopolis (SC)">Florianopolis (SC)</option>
+                            <option value="Brasilia (DF)">Brasilia (DF)</option>
+                            <option value="Aracaju (SE)">Aracaju (SE)</option>
+                            <option value="Salvador (BH)">Salvador (BH)</option>
+                            <option value="Campo Grande (MS)">Campo Grande (MS)</option>
+                            <option value="Sao Paulo (SP)">Sao Paulo (SP)</option>
+                            <option value="Natal (RN)">Natal (RN)</option>
+                            <option value="Rio de Janeiro (RJ)">Rio de Janeiro (RJ)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>To</label>
+                        <select name="to" required>
+                            <option value="" disabled selected>Select Destination</option>
+                            <option value="Florianopolis (SC)">Florianopolis (SC)</option>
+                            <option value="Recife (PE)">Recife (PE)</option>
+                            <option value="Brasilia (DF)">Brasilia (DF)</option>
+                            <option value="Salvador (BH)">Salvador (BH)</option>
+                            <option value="Aracaju (SE)">Aracaju (SE)</option>
+                            <option value="Campo Grande (MS)">Campo Grande (MS)</option>
+                            <option value="Sao Paulo (SP)">Sao Paulo (SP)</option>
+                            <option value="Natal (RN)">Natal (RN)</option>
+                            <option value="Rio de Janeiro (RJ)">Rio de Janeiro (RJ)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Flight Type</label>
+                        <select name="flightType" required>
+                            <option value="economic">Economic</option>
+                            <option value="premium">Premium</option>
+                            <option value="firstClass">First Class</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Agency</label>
+                        <select name="agency" required>
+                            <option value="FlyingDrops">FlyingDrops</option>
+                            <option value="CloudFy">CloudFy</option>
+                            <option value="Rainbow">Rainbow</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Date</label>
+                        <input type="date" name="date" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Duration (Hours)</label>
+                        <input type="number" step="0.1" name="time" placeholder="e.g. 2.5" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Distance (km)</label>
+                        <input type="number" step="0.1" name="distance" placeholder="e.g. 600" required>
+                    </div>
+                </div>
+
+                <button type="submit">Calculate Price</button>
+            </form>
+        </div>
+
+        <div class="card result-card">
+            <div id="welcome-msg">
+                <h2>Ready to Fly?</h2>
+                <p style="color: var(--text-secondary); margin-top: 1rem;">Fill in the details to get an estimated
+                    flight price.</p>
+            </div>
+
+            <div class="loader" id="loader"></div>
+
+            <div id="result-container">
+                <p
+                    style="color: var(--text-secondary); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px;">
+                    Estimated Price</p>
+                <div class="price-display">
+                    <span class="currency">$</span><span id="price-value">0.00</span>
+                </div>
+                <p style="color: var(--accent); font-size: 0.9rem;">AI Prediction Confidence: High</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('prediction-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const form = e.target;
+            const data = Object.fromEntries(new FormData(form).entries());
+
+            // UI State
+            document.getElementById('welcome-msg').style.display = 'none';
+            document.getElementById('result-container').classList.remove('show');
+            document.getElementById('loader').style.display = 'block';
+
+            try {
+                const response = await fetch('/predict', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+
+                const result = await response.json();
+
+                if (result.error) {
+                    alert('Error: ' + result.error);
+                } else {
+                    // Update Value
+                    const price = parseFloat(result.predicted_price).toFixed(2);
+                    document.getElementById('price-value').innerText = price;
+
+                    // Show Result
+                    document.getElementById('loader').style.display = 'none';
+                    document.getElementById('result-container').classList.add('show');
+                }
+            } catch (err) {
+                console.error(err);
+                alert('Failed to connect to server.');
+                document.getElementById('loader').style.display = 'none';
+            }
+        });
+    </script>
+</body>
+
+</html>

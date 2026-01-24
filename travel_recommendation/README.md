@@ -2,6 +2,8 @@
 
 An interactive solution for exploring travel data and receiving personalized hotel recommendations.
 
+![Travel Recommendation & Dashboard](../picture/travel_recommendation.png)
+
 ## Features
 - **Engine**: Content-based filtering logic to suggest hotels in locations previously visited or liked by the user.
 - **Dashboard**: **Streamlit** web application with interactive visualizations and user historical analysis.
