@@ -8,9 +8,15 @@ st.set_page_config(page_title="Voyager Travel Insights", layout="wide")
 
 st.title("Voyager Travel Insights Dashboard (Enhanced)")
 
-# Paths
-MODEL_PATH = 'travel_recommendation/models/collab_model.pkl'
-META_PATH = 'travel_recommendation/models/hotel_metadata.pkl'
+# Robust path resolution
+current_dir = os.path.dirname(os.path.abspath(__file__))
+project_dir = os.path.dirname(current_dir)
+MODEL_PATH = os.path.join(project_dir, 'models', 'collab_model.pkl')
+META_PATH = os.path.join(project_dir, 'models', 'hotel_metadata.pkl')
+
+if not os.path.exists(MODEL_PATH):
+    MODEL_PATH = os.path.join(os.getcwd(), 'travel_recommendation', 'models', 'collab_model.pkl')
+    META_PATH = os.path.join(os.getcwd(), 'travel_recommendation', 'models', 'hotel_metadata.pkl')
 
 @st.cache_data
 def load_data():
@@ -23,7 +29,7 @@ def load_data():
 model_data, hotel_meta = load_data()
 
 if model_data is None:
-    st.error("Model assets not found. Please train the validation engine first using src/train_collab.py.")
+    st.error("Model assets not found. Please train the recommendation engine first using 'python travel_recommendation/src/train.py'.")
 else:
     # Sidebar
     st.sidebar.header("User Selection")

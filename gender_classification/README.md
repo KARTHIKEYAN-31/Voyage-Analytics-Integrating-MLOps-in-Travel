@@ -15,5 +15,5 @@ A classification model designed to predict a user's gender from their profile da
 2. **Run API**: `python src/app.py` (Port 5001)
 3. **Predict**:
    ```powershell
-   Invoke-RestMethod -Uri "http://127.0.0.1:5001/classify" -Method Post -ContentType "application/json" -Body '{"age": 25, "company": "4You"}'
+   Invoke-RestMethod -Uri "http://127.0.0.1:5001/classify" -Method Post -ContentType "application/json" -Body '{"name": "Roy Braun", "age": 25, "company": "4You"}'
    ```

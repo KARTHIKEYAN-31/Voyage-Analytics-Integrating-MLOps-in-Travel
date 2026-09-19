@@ -5,11 +5,14 @@ import os
 
 app = Flask(__name__)
 
-# Hardcoded robust path for this environment
-MODEL_DIR = r"d:\project\woolf\Voyage\gender_classification\models"
+# Robust path resolution for local, repo-root, or containerized execution
+current_dir = os.path.dirname(os.path.abspath(__file__))
+project_dir = os.path.dirname(current_dir)
+model_path = os.path.join(project_dir, 'models', 'gender_model_enhanced.pkl')
 
-# Load model
-model_path = os.path.join(MODEL_DIR, 'gender_model_enhanced.pkl')
+if not os.path.exists(model_path):
+    # Fallback if run from workspace root
+    model_path = os.path.join(os.getcwd(), 'gender_classification', 'models', 'gender_model_enhanced.pkl')
 
 print(f"Loading model from: {model_path}")
 

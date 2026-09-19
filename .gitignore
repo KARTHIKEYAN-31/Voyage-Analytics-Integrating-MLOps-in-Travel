@@ -40,3 +40,8 @@ mlruns/
 models/
 *.pkl
 dataset/
+
+# Private Presenter Assets (User only)
+*VIDEO_PRESENTATION_SCRIPT*.md
+docs/*VIDEO_PRESENTATION_SCRIPT*.md
+
