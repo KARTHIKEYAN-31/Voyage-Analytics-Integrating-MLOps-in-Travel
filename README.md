@@ -63,7 +63,8 @@ Voyage Analytics Integrating MLOps in Travel/
 │   ├── 01_FINAL_PROJECT_REPORT.md   # Comprehensive Technical Capstone Report
 │   ├── 02_INTERVIEW_QA_PREPARATION.md # Follow-up & Viva Q&A Guide
 │   ├── 03_DEPLOYMENT_AND_RUNBOOK.md # Operational Deployment & Execution Runbook
-│   └── 04_EVALUATION_RUBRIC_COMPLIANCE.md # 100% Evaluation Criteria Compliance Matrix
+│   ├── 04_EVALUATION_RUBRIC_COMPLIANCE.md # 100% Evaluation Criteria Compliance Matrix
+│   └── GOOGLE_DOC_MLOPS_WORKFLOW_DOCUMENTATION.md # Google Doc Submission Ready Workflow Document
 ├── flight_price/                    # Scenario 1: Flight Price Prediction (Regression + MLOps)
 │   ├── airflow/dags/training_dag.py # Apache Airflow automated retraining DAG
 │   ├── k8s/deployment.yaml          # Kubernetes 2-replica Deployment & Service
@@ -206,6 +207,7 @@ kubectl rollout status deployment/flight-price-api
 ## 📚 Submission & Documentation Suite
 
 Detailed technical reports and operational guides are available in the [`docs/`](docs/) directory:
+- [**Google Doc Submission Workflow Document**](docs/GOOGLE_DOC_MLOPS_WORKFLOW_DOCUMENTATION.md): Formatted specifically for Google Docs copy-paste with screenshot placeholders across all 7 MLOps stages.
 - [**01. Final Technical Capstone Report**](docs/01_FINAL_PROJECT_REPORT.md): Comprehensive system specification, dataset relationships, mathematical formulations, and evaluation metrics.
 - [**02. Interview Q&A Preparation Guide**](docs/02_INTERVIEW_QA_PREPARATION.md): In-depth answers to core follow-up questions (real-time serving, K8s/Docker rationale, MLflow, retraining, multi-region scaling).
 - [**03. Deployment & Operational Runbook**](docs/03_DEPLOYMENT_AND_RUNBOOK.md): Step-by-step reproduction and operational runbook for cloud and local deployments.

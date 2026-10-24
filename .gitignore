@@ -37,9 +37,15 @@ Thumbs.db
 
 # Project Specific
 mlruns/
-models/
-*.pkl
-dataset/
+
+# Track trained models for MLOps submission compliance
+!flight_price/models/
+!flight_price/models/*.pkl
+!gender_classification/models/
+!gender_classification/models/*.pkl
+!travel_recommendation/models/
+!travel_recommendation/models/*.pkl
+
 
 # Private Presenter Assets (User only)
 *VIDEO_PRESENTATION_SCRIPT*.md
